@@ -8,6 +8,23 @@ parameters:
     level: 8
     paths:
         - src
+        - tests
+
+    excludePaths:
+        - tests/data
+        - tests/Abstracts
+
+    checkUninitializedProperties: true
+    checkMissingCallableSignature: true
+
+    ignoreErrors:
+        -
+            message: '#Test::data[a-zA-Z0-9_]+\(\) return type has no value type specified in iterable type#'
+            path: tests
+        # This uses internal code that is not covered by backward compatibility promise, but only acceptable for testing.
+        -
+            message: '#is not covered by backward compatibility promise. The (method|class) might change in a minor PHPStan version.#'
+            path: tests
 
     friendly:
         lineBefore: 3
