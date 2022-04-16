@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>PHPStan Formatter Friendly</h3>
+  <h1>PHPStan Formatter Friendly</h1>
   A simple error formatter for PHPStan that display code frame.
 </div>
 <p align="center">
