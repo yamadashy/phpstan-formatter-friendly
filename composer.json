@@ -44,8 +44,8 @@
     "scripts": {
         "test": "phpunit",
         "analyze": "phpstan analyze -c phpstan.neon.dist --error-format friendly",
-        "analyze:raw": "phpstan analyze -c phpstan.neon.dist --error-format raw",
-        "analyze:table": "phpstan analyze -c phpstan.neon.dist --error-format table",
-        "analyze:oneline": "phpstan analyze -c phpstan.neon.dist --error-format oneline"
+        "analyze-raw": "phpstan analyze -c phpstan.neon.dist --error-format raw",
+        "analyze-table": "phpstan analyze -c phpstan.neon.dist --error-format table",
+        "analyze-oneline": "phpstan analyze -c phpstan.neon.dist --error-format oneline"
     }
 }
