@@ -15,6 +15,9 @@
         "php-parallel-lint/php-console-highlighter": "^1.0",
         "phpstan/phpstan": "^0.12 || ^1.0"
     },
+    "require-dev": {
+        "grifart/phpstan-oneline": "^0.4.2",
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
@@ -38,5 +41,9 @@
     },
     "scripts": {
         "test": "phpunit",
+        "analyze": "phpstan analyze -c phpstan.neon.dist --error-format friendly",
+        "analyze:raw": "phpstan analyze -c phpstan.neon.dist --error-format raw",
+        "analyze:table": "phpstan analyze -c phpstan.neon.dist --error-format table",
+        "analyze:oneline": "phpstan analyze -c phpstan.neon.dist --error-format oneline"
     }
 }
