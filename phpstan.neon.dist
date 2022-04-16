@@ -1,0 +1,14 @@
+includes:
+    - extension.neon
+    - vendor/grifart/phpstan-oneline/config.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+
+parameters:
+    level: 8
+    paths:
+        - src
+
+    friendly:
+        lineBefore: 3
+        lineAfter: 3
