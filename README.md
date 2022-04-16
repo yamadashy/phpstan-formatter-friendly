@@ -1,9 +1,9 @@
 <div align="center">
   <h1>PHPStan Formatter Friendly</h1>
-  A simple error formatter for PHPStan that display code frame.
+  A simple error formatter for [PHPStan](https://phpstan.org/) that display code frame.
 </div>
 <p align="center">
-    <img src="./docs/example.png" alt="Larastan Example" height="300">
+    <img src="./docs/example.png" alt="PHPStan Example" height="300">
 </p>
 <p align="center">
   <a href="https://github.com/yamadashy/phpstan-formatter-friendly/actions"><img src="https://img.shields.io/github/workflow/status/yamadashy/phpstan-formatter-friendly/Tests?label=tests&logo=github" alt="Test Status"></a>
@@ -61,3 +61,5 @@ parameters:
 - `lineBefore` ... Number of lines to display before error line
 - `lineAfter` ... Number of lines to display after error line
 
+# License
+Distributed under the [MIT license](LICENSE.md).
