@@ -1,6 +1,6 @@
 <div align="center">
   <h1>PHPStan Formatter Friendly</h1>
-  A simple error formatter for [PHPStan](https://phpstan.org/) that display code frame.
+  A simple error formatter for <a href="https://phpstan.org/">PHPStan</a> that display code frame.
 </div>
 <p align="center">
     <img src="./docs/example.png" alt="PHPStan Example" height="300">
