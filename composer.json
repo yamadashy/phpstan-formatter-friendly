@@ -42,10 +42,14 @@
         }
     },
     "scripts": {
-        "test": "phpunit",
-        "analyze": "phpstan analyze -c phpstan.neon.dist --error-format friendly",
-        "analyze-raw": "phpstan analyze -c phpstan.neon.dist --error-format raw",
-        "analyze-table": "phpstan analyze -c phpstan.neon.dist --error-format table",
-        "analyze-oneline": "phpstan analyze -c phpstan.neon.dist --error-format oneline"
+        "test": [
+            "@test:types",
+            "@test:unit"
+        ],
+        "test:unit": "phpunit",
+        "test:types": "phpstan analyze -c phpstan.neon.dist --error-format friendly",
+        "test:types-raw": "phpstan analyze -c phpstan.neon.dist --error-format raw",
+        "test:types-table": "phpstan analyze -c phpstan.neon.dist --error-format table",
+        "test:types-oneline": "phpstan analyze -c phpstan.neon.dist --error-format oneline"
     }
 }
