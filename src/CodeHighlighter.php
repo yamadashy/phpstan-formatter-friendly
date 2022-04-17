@@ -43,12 +43,14 @@ class CodeHighlighter
      */
     public function highlight(string $fileContent, int $lineNumber, int $lineBefore, int $lineAfter): string
     {
-        return $this->highlighter->getCodeSnippet(
+        $content = $this->highlighter->getCodeSnippet(
             $fileContent,
             $lineNumber,
             $lineBefore,
             $lineAfter
         );
+
+        return rtrim($content, "\n");
     }
 
 }

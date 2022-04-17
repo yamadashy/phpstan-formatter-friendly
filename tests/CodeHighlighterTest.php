@@ -6,7 +6,6 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Tests\Traits\EscapeTextColors;
-use Tests\Traits\OldHighlighterSupport;
 use Yamadashy\PhpStanFormatterFriendly\CodeHighlighter;
 
 /**
@@ -15,13 +14,10 @@ use Yamadashy\PhpStanFormatterFriendly\CodeHighlighter;
 class CodeHighlighterTest extends TestCase
 {
 
-    use EscapeTextColors,
-        OldHighlighterSupport;
+    use EscapeTextColors;
 
     public function dataResultProvider(): iterable
     {
-        $lineBrakeOrEmptyString = $this->getLineBrakeOrEmptyStringForHighlighter();
-
         yield 'show 3 lines before and after' => [
             __DIR__ . '/data/AnalysisTargetFoo.php',
             11,
@@ -33,7 +29,7 @@ class CodeHighlighterTest extends TestCase
   > 11|     public function targetFoo()
     12|     {
     13|         return 1;
-    14|     }'.$lineBrakeOrEmptyString,
+    14|     }',
         ];
 
         yield 'show 5 lines before' => [
@@ -49,7 +45,7 @@ class CodeHighlighterTest extends TestCase
   > 11|     public function targetFoo()
     12|     {
     13|         return 1;
-    14|     }'.$lineBrakeOrEmptyString,
+    14|     }',
         ];
 
         yield 'show 6 lines after' => [
@@ -66,7 +62,7 @@ class CodeHighlighterTest extends TestCase
     14|     }
     15| 
     16| }
-    17| '.$lineBrakeOrEmptyString
+    17| '
         ];
 
         yield 'show 1 line only' => [
@@ -74,7 +70,7 @@ class CodeHighlighterTest extends TestCase
             11,
             0,
             0,
-            '  > 11|     public function targetFoo()'.$lineBrakeOrEmptyString
+            '  > 11|     public function targetFoo()'
         ];
 
         yield 'show 1 line of Bar' => [
@@ -82,7 +78,7 @@ class CodeHighlighterTest extends TestCase
             13,
             0,
             0,
-            '  > 13|         return 2;'.$lineBrakeOrEmptyString
+            '  > 13|         return 2;'
         ];
     }
 
