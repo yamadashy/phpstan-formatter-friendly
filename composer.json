@@ -17,7 +17,7 @@
     },
     "require-dev": {
         "grifart/phpstan-oneline": "^0.4.2",
-        "phpstan/phpstan-phpunit": "^1.0",
+        "phpstan/phpstan-phpunit": "^0.12.22 || ^1.0",
         "phpunit/phpunit": "^8.5.26"
     },
     "minimum-stability": "dev",

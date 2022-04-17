@@ -17,6 +17,7 @@ parameters:
     checkUninitializedProperties: true
     checkMissingCallableSignature: true
 
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         # Skip check dataProvider return type
         -
