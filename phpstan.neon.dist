@@ -11,20 +11,30 @@ parameters:
         - tests
 
     excludePaths:
-        - tests/data
-        - tests/Abstracts
+        - tests/data/
+        - tests/Abstracts/
 
     checkUninitializedProperties: true
     checkMissingCallableSignature: true
 
     ignoreErrors:
+        # Skip check dataProvider return type
         -
             message: '#Test::data[a-zA-Z0-9_]+\(\) return type has no value type specified in iterable type#'
-            path: tests
+            path: tests/
+
         # This uses internal code that is not covered by backward compatibility promise, but only acceptable for testing.
         -
             message: '#is not covered by backward compatibility promise. The (method|class) might change in a minor PHPStan version.#'
-            path: tests
+            path: tests/
+
+        # Support for php-console-highlighter < 1.0
+        -
+            message: '#Property Yamadashy\\PhpStanFormatterFriendly\\CodeHighlighter::\$highlighter has unknown class (PHP_Parallel_Lint|JakubOnderka)\\PhpConsoleHighlighter\\Highlighter as its type.#'
+            path: src/CodeHighlighter.php
+        -
+            message: '#Call to method getCodeSnippet\(\) on an unknown class (PHP_Parallel_Lint|JakubOnderka)\\PhpConsoleHighlighter\\Highlighter.#'
+            path: src/CodeHighlighter.php
 
     friendly:
         lineBefore: 3

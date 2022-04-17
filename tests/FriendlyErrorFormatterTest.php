@@ -8,6 +8,7 @@ use PHPStan\File\FuzzyRelativePathHelper;
 use PHPStan\File\NullRelativePathHelper;
 use PHPStan\Testing\ErrorFormatterTestCase;
 use Tests\Traits\EscapeTextColors;
+use Tests\Traits\OldHighlighterSupport;
 use Yamadashy\PhpStanFormatterFriendly\FriendlyErrorFormatter;
 
 /**
@@ -16,11 +17,13 @@ use Yamadashy\PhpStanFormatterFriendly\FriendlyErrorFormatter;
 class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
 {
 
-    use EscapeTextColors;
+    use EscapeTextColors,
+        OldHighlighterSupport;
 
     public function dataFormatterResultProvider(): iterable
     {
         $currentDir = __DIR__;
+        $lineBrakeOrEmptyString = $this->getLineBrakeOrEmptyStringForHighlighter();
 
         // Error
         yield 'No errors' => [
@@ -42,7 +45,7 @@ class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
     14|     }
     15|
     16| }
-
+$lineBrakeOrEmptyString
 
  [ERROR] Found 1 error
 
@@ -60,7 +63,7 @@ class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
     10|      */
     11|     public function targetBar()
     12|     {
-
+$lineBrakeOrEmptyString
   ✘ Foo
   at {$currentDir}/data/AnalysisTargetFoo.php:13
     10|      */
@@ -70,7 +73,7 @@ class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
     14|     }
     15|
     16| }
-
+$lineBrakeOrEmptyString
 
  [ERROR] Found 2 errors
 
@@ -112,7 +115,7 @@ class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
     14|     }
     15|
     16| }
-
+$lineBrakeOrEmptyString
   ⚠ first warning
 
 
@@ -155,7 +158,7 @@ class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
     10|      */
     11|     public function targetBar()
     12|     {
-
+$lineBrakeOrEmptyString
   ✘ Foo
   at {$currentDir}/data/AnalysisTargetFoo.php:13
     10|      */
@@ -165,7 +168,7 @@ class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
     14|     }
     15|
     16| }
-
+$lineBrakeOrEmptyString
   ✘ first generic error
 
   ✘ second generic error
