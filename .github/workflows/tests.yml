@@ -9,6 +9,37 @@ on:
   workflow_dispatch:
 
 jobs:
+  analysis:
+    name: Analyze codes ${{ matrix.dependency-version }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        dependency-version: [prefer-lowest, prefer-stable]
+
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          tools: composer:v2
+          coverage: none
+
+      - name: Install dependencies
+        run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress --ansi
+
+      - name: Run lint
+        run: find ./src ./tests -name "*.php" | xargs -P10 -n1 php -l
+
+      - name: Run coding standards check
+        run: composer run cs-fix-dry
+
+      - name: Run static analysis
+        run: composer run analyze
+
   test:
     name: Test PHP ${{ matrix.php-version }}, ${{ matrix.dependency-version }}
     runs-on: ubuntu-latest
@@ -34,12 +65,6 @@ jobs:
 
       - name: Run lint
         run: find ./src ./tests -name "*.php" | xargs -P10 -n1 php -l
-
-      - name: Run coding standards check
-        run: composer run cs-fix-dry
-
-      - name: Run static analysis
-        run: composer run analyze
 
       - name: Run unit test
         run: composer run test
