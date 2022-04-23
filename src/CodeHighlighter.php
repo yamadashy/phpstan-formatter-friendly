@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Yamadashy\PhpStanFormatterFriendly;
 
@@ -11,8 +9,7 @@ use PHP_Parallel_Lint\PhpConsoleHighlighter\Highlighter;
 
 class CodeHighlighter
 {
-
-    /** @var OldHighlighter|Highlighter  */
+    /** @var Highlighter|OldHighlighter */
     private $highlighter;
 
     public function __construct()
@@ -24,7 +21,7 @@ class CodeHighlighter
             // Support Highlighter and ConsoleColor 1.0+.
             $colors = new ConsoleColor();
             $this->highlighter = new Highlighter($colors);
-        } else if (
+        } elseif (
             class_exists('\JakubOnderka\PhpConsoleHighlighter\Highlighter')
             && class_exists('\JakubOnderka\PhpConsoleColor\ConsoleColor')
         ) {
@@ -34,13 +31,6 @@ class CodeHighlighter
         }
     }
 
-    /**
-     * @param string $fileContent
-     * @param int $lineNumber
-     * @param int $lineBefore
-     * @param int $lineAfter
-     * @return string
-     */
     public function highlight(string $fileContent, int $lineNumber, int $lineBefore, int $lineAfter): string
     {
         $content = $this->highlighter->getCodeSnippet(
@@ -52,5 +42,4 @@ class CodeHighlighter
 
         return rtrim($content, "\n");
     }
-
 }

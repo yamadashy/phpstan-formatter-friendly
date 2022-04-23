@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Tests;
 
@@ -12,10 +10,11 @@ use Yamadashy\PhpStanFormatterFriendly\FriendlyErrorFormatter;
 
 /**
  * @coversDefaultClass \Yamadashy\PhpStanFormatterFriendly\FriendlyErrorFormatter
+ *
+ * @internal
  */
-class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
+final class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
 {
-
     use EscapeTextColors;
 
     public function dataFormatterResultProvider(): iterable
@@ -80,24 +79,24 @@ class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
         // Warning
         yield 'One warning' => [
             1, 0, 0, 1,
-            "  ⚠ first warning
+            '  ⚠ first warning
 
 
  [WARNING] Found 0 errors and 1 warning
 
-",
+',
         ];
 
         yield 'Two warning' => [
             1, 0, 0, 2,
-            "  ⚠ first warning
+            '  ⚠ first warning
 
   ⚠ second warning
 
 
  [WARNING] Found 0 errors and 2 warnings
 
-",
+',
         ];
 
         // Error and warning
@@ -124,24 +123,24 @@ class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
         // Generic error
         yield 'One generic error' => [
             1, 0, 1, 0,
-            "  ✘ first generic error
+            '  ✘ first generic error
 
 
  [ERROR] Found 1 error
 
-",
+',
         ];
 
         yield 'Multiple generic errors' => [
             1, 0, 2, 0,
-            "  ✘ first generic error
+            '  ✘ first generic error
 
   ✘ second generic error
 
 
  [ERROR] Found 2 errors
 
-",
+',
         ];
 
         yield 'Multiple errors, warnings and generic errors' => [
@@ -179,7 +178,6 @@ class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
 
 ",
         ];
-
     }
 
     /**
@@ -192,8 +190,7 @@ class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
         int $numGenericErrors,
         int $numWarnings,
         string $expectedOutput
-    ): void
-    {
+    ): void {
         $relativePathHelper = new FuzzyRelativePathHelper(new NullRelativePathHelper(), '', [], '/');
         $formatter = new FriendlyErrorFormatter($relativePathHelper, 3, 3);
         $dummyAnalysisResult = $this->getDummyAnalysisResult($numFileErrors, $numGenericErrors, $numWarnings);
@@ -202,22 +199,18 @@ class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
         $outputContent = $this->escapeTextColors($this->getOutputContent());
         $outputContent = $this->rtrimByLines($outputContent);
 
-        $this->assertSame($expectedExitCode, $exitCode);
-        $this->assertEquals($expectedOutput, $outputContent);
+        static::assertSame($expectedExitCode, $exitCode);
+        static::assertSame($expectedOutput, $outputContent);
     }
 
     /**
-     * @param int $numFileErrors
-     * @param int $numGenericErrors
-     * @return \PHPStan\Command\AnalysisResult
      * @throws \PHPStan\ShouldNotHappenException
      */
-    private function getDummyAnalysisResult(int $numFileErrors, int $numGenericErrors, int $numWarnings) : \PHPStan\Command\AnalysisResult
+    private function getDummyAnalysisResult(int $numFileErrors, int $numGenericErrors, int $numWarnings): \PHPStan\Command\AnalysisResult
     {
-        if ($numFileErrors > 5 || $numFileErrors < 0 ||
-            $numGenericErrors > 2 || $numGenericErrors < 0 ||
-            $numWarnings > 2 || $numWarnings < 0)
-        {
+        if ($numFileErrors > 5 || $numFileErrors < 0
+            || $numGenericErrors > 2 || $numGenericErrors < 0
+            || $numWarnings > 2 || $numWarnings < 0) {
             throw new \PHPStan\ShouldNotHappenException();
         }
 
@@ -226,27 +219,22 @@ class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
             new \PHPStan\Analyser\Error('Bar', __DIR__.'/data/AnalysisTargetBar.php', 9),
         ], 0, $numFileErrors);
         $genericErrors = \array_slice([
-            'first generic error', 'second generic error'
+            'first generic error', 'second generic error',
         ], 0, $numGenericErrors);
         $warnings = \array_slice([
-            'first warning', 'second warning'
+            'first warning', 'second warning',
         ], 0, $numWarnings);
 
-        return new \PHPStan\Command\AnalysisResult($fileErrors, $genericErrors, [], $warnings, \false, null, \true);
+        return new \PHPStan\Command\AnalysisResult($fileErrors, $genericErrors, [], $warnings, false, null, true);
     }
 
-    /**
-     * @param string $text
-     * @return string
-     */
     private function rtrimByLines(string $text): string
     {
         $lines = explode(PHP_EOL, $text);
-        $lines = array_map(static function($line) {
+        $lines = array_map(static function ($line) {
             return rtrim($line);
         }, $lines);
 
         return implode(PHP_EOL, $lines);
     }
-
 }

@@ -16,6 +16,7 @@
         "phpstan/phpstan": "^0.12 || ^1.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.4.0",
         "grifart/phpstan-oneline": "^0.4.2",
         "phpstan/phpstan-phpunit": "^0.12.22 || ^1.0",
         "phpunit/phpunit": "^8.5.26"
@@ -42,14 +43,17 @@
         }
     },
     "scripts": {
-        "test": [
-            "@test:types",
-            "@test:unit"
+        "tests": [
+            "@cs-fix-dry",
+            "@analyze",
+            "@test"
         ],
-        "test:unit": "phpunit",
-        "test:types": "phpstan analyze -c phpstan.neon.dist --error-format friendly",
-        "test:types-raw": "phpstan analyze -c phpstan.neon.dist --error-format raw",
-        "test:types-table": "phpstan analyze -c phpstan.neon.dist --error-format table",
-        "test:types-oneline": "phpstan analyze -c phpstan.neon.dist --error-format oneline"
+        "test": "phpunit",
+        "analyze": "phpstan analyze -c phpstan.neon.dist --error-format friendly",
+        "analyze-raw": "phpstan analyze -c phpstan.neon.dist --error-format raw",
+        "analyze-table": "phpstan analyze -c phpstan.neon.dist --error-format table",
+        "analyze-oneline": "phpstan analyze -c phpstan.neon.dist --error-format oneline",
+        "cs-fix": "php-cs-fixer fix",
+        "cs-fix-dry": "php-cs-fixer fix --dry-run"
     }
 }
