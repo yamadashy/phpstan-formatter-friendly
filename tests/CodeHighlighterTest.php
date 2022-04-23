@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Tests;
 
@@ -10,16 +8,17 @@ use Yamadashy\PhpStanFormatterFriendly\CodeHighlighter;
 
 /**
  * @coversDefaultClass \Yamadashy\PhpStanFormatterFriendly\CodeHighlighter
+ *
+ * @internal
  */
-class CodeHighlighterTest extends TestCase
+final class CodeHighlighterTest extends TestCase
 {
-
     use EscapeTextColors;
 
     public function dataResultProvider(): iterable
     {
         yield 'show 3 lines before and after' => [
-            __DIR__ . '/data/AnalysisTargetFoo.php',
+            __DIR__.'/data/AnalysisTargetFoo.php',
             11,
             3,
             3,
@@ -33,12 +32,12 @@ class CodeHighlighterTest extends TestCase
         ];
 
         yield 'show 5 lines before' => [
-            __DIR__ . '/data/AnalysisTargetFoo.php',
+            __DIR__.'/data/AnalysisTargetFoo.php',
             11,
             5,
             3,
             '     6| {
-     7| 
+     7|
      8|     /**
      9|      * @return string
     10|      */
@@ -49,7 +48,7 @@ class CodeHighlighterTest extends TestCase
         ];
 
         yield 'show 6 lines after' => [
-            __DIR__ . '/data/AnalysisTargetFoo.php',
+            __DIR__.'/data/AnalysisTargetFoo.php',
             11,
             3,
             6,
@@ -60,25 +59,25 @@ class CodeHighlighterTest extends TestCase
     12|     {
     13|         return 1;
     14|     }
-    15| 
+    15|
     16| }
-    17| '
+    17|',
         ];
 
         yield 'show 1 line only' => [
-            __DIR__ . '/data/AnalysisTargetFoo.php',
+            __DIR__.'/data/AnalysisTargetFoo.php',
             11,
             0,
             0,
-            '  > 11|     public function targetFoo()'
+            '  > 11|     public function targetFoo()',
         ];
 
         yield 'show 1 line of Bar' => [
-            __DIR__ . '/data/AnalysisTargetBar.php',
+            __DIR__.'/data/AnalysisTargetBar.php',
             13,
             0,
             0,
-            '  > 13|         return 2;'
+            '  > 13|         return 2;',
         ];
     }
 
@@ -92,16 +91,25 @@ class CodeHighlighterTest extends TestCase
         int $lineBefore,
         int $lineAfter,
         string $expectedOutput
-    ): void
-    {
+    ): void {
         $codeHighlighter = new CodeHighlighter();
 
         $fileContent = (string) file_get_contents($filePath);
 
         $output = $codeHighlighter->highlight($fileContent, $lineNumber, $lineBefore, $lineAfter);
         $output = $this->escapeTextColors($output);
+        $output = $this->rtrimByLines($output);
 
-        $this->assertEquals($expectedOutput, $output);
+        static::assertSame($expectedOutput, $output);
     }
 
+    private function rtrimByLines(string $text): string
+    {
+        $lines = explode(PHP_EOL, $text);
+        $lines = array_map(static function ($line) {
+            return rtrim($line);
+        }, $lines);
+
+        return implode(PHP_EOL, $lines);
+    }
 }
