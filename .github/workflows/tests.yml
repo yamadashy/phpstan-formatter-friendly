@@ -10,21 +10,22 @@ on:
 
 jobs:
   analysis:
-    name: Analyze codes ${{ matrix.dependency-version }}
+    name: '[analysis] PHP ${{ matrix.php-version }}, ${{ matrix.dependency-version }}'
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
+        php-version: ['8.1']
         dependency-version: [prefer-lowest, prefer-stable]
 
     steps:
       - name: Git Checkout
         uses: actions/checkout@v2
 
-      - name: Setup PHP
+      - name: Setup PHP ${{ matrix.php-version }}
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.1
+          php-version: ${{ matrix.php-version }}
           tools: composer:v2
           coverage: none
 
@@ -41,7 +42,7 @@ jobs:
         run: composer run analyze
 
   test:
-    name: Test PHP ${{ matrix.php-version }}, ${{ matrix.dependency-version }}
+    name: '[test] PHP ${{ matrix.php-version }}, ${{ matrix.dependency-version }}'
     runs-on: ubuntu-latest
 
     strategy:
