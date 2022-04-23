@@ -69,7 +69,7 @@ class FriendlyErrorFormatter implements ErrorFormatter
                 $codeSnippet = $codeHighlighter->highlight($fileContent, $line, $this->lineBefore, $this->lineAfter);
             }
 
-            $output->writeLineFormatted("  <fg=red>✘</> <fg=default;options=bold>{$message}</>");
+            $output->writeLineFormatted("  <fg=red;options=bold>✘</> <fg=default;options=bold>{$message}</>");
             if (null !== $tip) {
                 $output->writeLineFormatted("  <fg=default>Tip. {$tip}</>");
             }
@@ -82,7 +82,7 @@ class FriendlyErrorFormatter implements ErrorFormatter
     private function writeNotFileSpecificErrors(AnalysisResult $analysisResult, Output $output): void
     {
         foreach ($analysisResult->getNotFileSpecificErrors() as $notFileSpecificError) {
-            $output->writeLineFormatted("  <fg=red>✘</> <fg=default;options=bold>{$notFileSpecificError}</>");
+            $output->writeLineFormatted("  <fg=red;options=bold>✘</> <fg=default;options=bold>{$notFileSpecificError}</>");
             $output->writeLineFormatted('');
         }
     }
@@ -90,7 +90,7 @@ class FriendlyErrorFormatter implements ErrorFormatter
     private function writeWarnings(AnalysisResult $analysisResult, Output $output): void
     {
         foreach ($analysisResult->getWarnings() as $warning) {
-            $output->writeLineFormatted("  <fg=yellow>⚠</> <fg=default;options=bold>{$warning}</>");
+            $output->writeLineFormatted("  <fg=yellow;options=bold>⚠</> <fg=default;options=bold>{$warning}</>");
             $output->writeLineFormatted('');
         }
     }
