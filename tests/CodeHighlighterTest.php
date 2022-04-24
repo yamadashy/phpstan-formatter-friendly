@@ -3,18 +3,16 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Traits\EscapeTextColors;
+use Tests\TestUtils\StringUtil;
 use Yamadashy\PhpStanFormatterFriendly\CodeHighlighter;
 
 /**
- * @coversDefaultClass \Yamadashy\PhpStanFormatterFriendly\CodeHighlighter
- *
  * @internal
+ *
+ * @coversDefaultClass \Yamadashy\PhpStanFormatterFriendly\CodeHighlighter
  */
 final class CodeHighlighterTest extends TestCase
 {
-    use EscapeTextColors;
-
     public function dataResultProvider(): iterable
     {
         yield 'show 3 lines before and after' => [
@@ -97,19 +95,9 @@ final class CodeHighlighterTest extends TestCase
         $fileContent = (string) file_get_contents($filePath);
 
         $output = $codeHighlighter->highlight($fileContent, $lineNumber, $lineBefore, $lineAfter);
-        $output = $this->escapeTextColors($output);
-        $output = $this->rtrimByLines($output);
+        $output = StringUtil::escapeTextColors($output);
+        $output = StringUtil::rtrimByLines($output);
 
         static::assertSame($expectedOutput, $output);
-    }
-
-    private function rtrimByLines(string $text): string
-    {
-        $lines = explode(PHP_EOL, $text);
-        $lines = array_map(static function ($line) {
-            return rtrim($line);
-        }, $lines);
-
-        return implode(PHP_EOL, $lines);
     }
 }

@@ -5,18 +5,16 @@ namespace Tests;
 use PHPStan\File\FuzzyRelativePathHelper;
 use PHPStan\File\NullRelativePathHelper;
 use PHPStan\Testing\ErrorFormatterTestCase;
-use Tests\Traits\EscapeTextColors;
+use Tests\TestUtils\StringUtil;
 use Yamadashy\PhpStanFormatterFriendly\FriendlyErrorFormatter;
 
 /**
- * @coversDefaultClass \Yamadashy\PhpStanFormatterFriendly\FriendlyErrorFormatter
- *
  * @internal
+ *
+ * @coversDefaultClass \Yamadashy\PhpStanFormatterFriendly\FriendlyErrorFormatter
  */
 final class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
 {
-    use EscapeTextColors;
-
     public function dataFormatterResultProvider(): iterable
     {
         $currentDir = __DIR__;
@@ -196,8 +194,8 @@ final class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
         $dummyAnalysisResult = $this->getDummyAnalysisResult($numFileErrors, $numGenericErrors, $numWarnings);
 
         $exitCode = $formatter->formatErrors($dummyAnalysisResult, $this->getOutput());
-        $outputContent = $this->escapeTextColors($this->getOutputContent());
-        $outputContent = $this->rtrimByLines($outputContent);
+        $outputContent = StringUtil::escapeTextColors($this->getOutputContent());
+        $outputContent = StringUtil::rtrimByLines($outputContent);
 
         static::assertSame($expectedExitCode, $exitCode);
         static::assertSame($expectedOutput, $outputContent);
@@ -226,15 +224,5 @@ final class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
         ], 0, $numWarnings);
 
         return new \PHPStan\Command\AnalysisResult($fileErrors, $genericErrors, [], $warnings, false, null, true);
-    }
-
-    private function rtrimByLines(string $text): string
-    {
-        $lines = explode(PHP_EOL, $text);
-        $lines = array_map(static function ($line) {
-            return rtrim($line);
-        }, $lines);
-
-        return implode(PHP_EOL, $lines);
     }
 }
