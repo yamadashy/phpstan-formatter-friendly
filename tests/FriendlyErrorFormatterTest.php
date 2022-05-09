@@ -190,7 +190,7 @@ final class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
         string $expectedOutput
     ): void {
         $relativePathHelper = new FuzzyRelativePathHelper(new NullRelativePathHelper(), '', [], '/');
-        $formatter = new FriendlyErrorFormatter($relativePathHelper, 3, 3);
+        $formatter = new FriendlyErrorFormatter($relativePathHelper, 3, 3, null);
         $dummyAnalysisResult = $this->getDummyAnalysisResult($numFileErrors, $numGenericErrors, $numWarnings);
 
         $exitCode = $formatter->formatErrors($dummyAnalysisResult, $this->getOutput());

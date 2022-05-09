@@ -19,11 +19,15 @@ class FriendlyErrorFormatter implements ErrorFormatter
     /** @var int */
     private $lineAfter;
 
-    public function __construct(RelativePathHelper $relativePathHelper, int $lineBefore, int $lineAfter)
+    /** @var null|string */
+    private $editorUrl;
+
+    public function __construct(RelativePathHelper $relativePathHelper, int $lineBefore, int $lineAfter, ?string $editorUrl)
     {
         $this->relativePathHelper = $relativePathHelper;
         $this->lineBefore = $lineBefore;
         $this->lineAfter = $lineAfter;
+        $this->editorUrl = $editorUrl;
     }
 
     /**
@@ -74,6 +78,9 @@ class FriendlyErrorFormatter implements ErrorFormatter
                 $output->writeLineFormatted("  <fg=default>Tip. {$tip}</>");
             }
             $output->writeLineFormatted("  at <fg=cyan>{$relativeFilePath}</>:<fg=cyan>{$line}</>");
+            if (\is_string($this->editorUrl)) {
+                $output->writeLineFormatted('  ✏️  '.str_replace(['%file%', '%line%'], [$error->getTraitFilePath() ?? $error->getFilePath(), (string) $error->getLine()], $this->editorUrl));
+            }
             $output->writeLineFormatted($codeSnippet);
             $output->writeLineFormatted('');
         }

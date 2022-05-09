@@ -56,10 +56,13 @@ parameters:
         # default is 3
         lineBefore: 3
         lineAfter: 3
+        # default is null
+        editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
 ```
 
 - `lineBefore` ... Number of lines to display before error line
 - `lineAfter` ... Number of lines to display after error line
+- `editorUrl` ... URL with placeholders like [table formatter config](URL for editor like table formatter)
 
 # License
 Distributed under the [MIT license](LICENSE.md).

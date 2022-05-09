@@ -40,3 +40,4 @@ parameters:
     friendly:
         lineBefore: 3
         lineAfter: 3
+        editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
