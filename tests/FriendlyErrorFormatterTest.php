@@ -223,6 +223,16 @@ final class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
             'first warning', 'second warning',
         ], 0, $numWarnings);
 
+        $reflectionMethod = new \ReflectionMethod(\PHPStan\Command\AnalysisResult::class, '__construct');
+        $numOfParams = $reflectionMethod->getNumberOfParameters();
+
+        // compatibility to less than 1.8.0
+        if (7 === $numOfParams) {
+            // @phpstan-ignore-next-line
+            return new \PHPStan\Command\AnalysisResult($fileErrors, $genericErrors, [], $warnings, false, null, true);
+        }
+
+        // @phpstan-ignore-next-line
         return new \PHPStan\Command\AnalysisResult($fileErrors, $genericErrors, [], $warnings, [], false, null, true);
     }
 }
