@@ -223,6 +223,6 @@ final class FriendlyErrorFormatterTest extends ErrorFormatterTestCase
             'first warning', 'second warning',
         ], 0, $numWarnings);
 
-        return new \PHPStan\Command\AnalysisResult($fileErrors, $genericErrors, [], $warnings, false, null, true);
+        return new \PHPStan\Command\AnalysisResult($fileErrors, $genericErrors, [], $warnings, [], false, null, true);
     }
 }
